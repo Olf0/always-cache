@@ -9,7 +9,7 @@ Rather than forking and adapting GitHub's `actions/cache`, which creates a maint
 - … [patch `post-if: success()` to `post-if: ${{ success() || failure() }}`](https://github.com/Olf0/cache-always/blob/main/.github/actions/cache-always/action.yml#L34-L35) to let the patched action cache data, even if the job fails, but not when it is cancelled.
 - … transparently map the "live patched" action to the patching action `.github/actions/cache-always/action.yml` by passing through all parameters, so the latter can be called.
 
-Ultimately one simply substitute all occurrences of `actions/cache@v3` with  `uses: Olf0/cache-always@v3`.<br />
+Ultimately one simply substitute all occurrences of `actions/cache@v3` with  `Olf0/cache-always@v3`.<br />
 Alternatively one copies [.github/actions/cache-always/action.yml](https://github.com/Olf0/cache-always/blob/main/.github/actions/cache-always.yml) from this repository directly to the same location of one's own repository and uses it in one's own workflows in `.github/workflows` instead of the original `actions/cache@v3`.
 
 For an example of a workflow using the "live patched" `actions/cache@v3` in `.github/actions/cache-always` see [.github/workflows/demo-cache-always.yml](https://github.com/Olf0/cache-always/blob/main/.github/workflows/demo-cache-always.yml).
