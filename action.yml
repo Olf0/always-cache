@@ -1,4 +1,4 @@
-name: 'Cache Always'
+name: 'Always cache'
 description: 'Cache artifacts like dependencies and build outputs to improve workflow execution time'
 
 inputs:
@@ -22,24 +22,26 @@ outputs:
 
 runs:
   using: 'composite'
+  env:
+      SEGMENT_DOWNLOAD_TIMEOUT_MINS: 1
   steps:
     # Instead of running `actions/cache@v3` directly, check it out locally and patch.
     - name: Prepare
-      run: mkdir -p ./.github/.tmp/actions/always-cache
+      run: mkdir -p ./.github/.tmp/actions/cache-always
       
     - name: 'Checkout actions/cache@v3'
       uses: actions/checkout@v3
       with:
         repository: actions/cache
         ref: v3
-        path: ./.github/.tmp/actions/always-cache
+        path: ./.github/.tmp/actions/cache-always
 
     - name: 'Patch actions/cache@v3'
-      run: sed -i 's/post-if: success()$/post-if: ${{ success() || failure() }}/' ./.github/.tmp/actions/always-cache/action.yml
+      run: sed -i 's/post-if: success()$/post-if: ${{ success() || failure() }}/' ./.github/.tmp/actions/cache-always/action.yml
 
     - name: Cache
       id: cache
-      uses: ./.github/.tmp/actions/always-cache
+      uses: ./.github/.tmp/actions/cache-always
       with:
         path: ${{ inputs.path }}
         key: ${{ inputs.key }}
