@@ -23,7 +23,10 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    # Instead of running `actions/cache@v3` directly, check it out locally.
+    # Instead of running `actions/cache@v3` directly, check it out locally and patch.
+    - name: Prepare
+      run: mkdir -p ./.github/.tmp/actions/always-cache
+      
     - name: 'Checkout actions/cache@v3'
       uses: actions/checkout@v3
       with:
@@ -31,7 +34,7 @@ runs:
         ref: v3
         path: ./.github/.tmp/actions/always-cache
 
-    - name: 'Patch actions/cache@v3 to make it cache data also when the job fails'
+    - name: 'Patch actions/cache@v3'
       run: sed -i 's/post-if: success()$/post-if: ${{ success() || failure() }}/' ./.github/.tmp/actions/always-cache/action.yml
 
     - name: Cache
