@@ -1,4 +1,4 @@
-name: 'Cache Always'
+name: 'Cache always'
 description: 'Cache artifacts like dependencies and build outputs to improve workflow execution time'
 
 inputs:
@@ -22,6 +22,8 @@ outputs:
 
 runs:
   using: 'composite'
+  env: 
+    patchedAction: $GITHUB_ACTIONS/.github/.tmp/actions/always-cache
   steps:
     # Instead of running `actions/cache@v3` directly, check it out locally.
     - name: 'Checkout actions/cache@v3'
@@ -29,14 +31,14 @@ runs:
       with:
         repository: actions/cache
         ref: v3
-        path: ./.github/.tmp/actions/always-cache
+        path: $patchedAction
 
     - name: 'Patch actions/cache@v3 to make it cache data also when the job fails'
-      run: sed -i 's/post-if: success()$/post-if: ${{ success() || failure() }}/' ./.github/.tmp/actions/always-cache/action.yml
+      run: sed -i 's/post-if: success()$/post-if: ${{ success() || failure() }}/' $patchedAction/action.yml
 
     - name: Cache
       id: cache
-      uses: ./.github/.tmp/actions/always-cache
+      uses: $patchedAction
       with:
         path: ${{ inputs.path }}
         key: ${{ inputs.key }}
