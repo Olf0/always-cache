@@ -23,7 +23,7 @@ outputs:
 runs:
   using: 'composite'
   env: 
-    patchedAction: $GITHUB_ACTIONS/.github/.tmp/actions/always-cache
+    patchedAction: $GITHUB_WORKSPACE/.github/.tmp/actions/always-cache
   steps:
     # Instead of running `actions/cache@v3` directly, check it out locally.
     - name: 'Checkout actions/cache@v3'
