@@ -1,15 +1,18 @@
-name: 'Example of a workflow using the "live patched" `actions/cache@v3` in `.github/actions/cache-always`'
-on: push
+name: 'Exemplary workflow using "live patched" `actions/cache@v3` via `Olf0/always-cache@v3`'
+on:
+  push:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 jobs:
   cache-demo:
     runs-on: ubuntu-latest
     steps:
-      # Use `uses: Olf0/cache-always@v3`,
+      # Use `uses: Olf0/always-cache@v3`,
       # instead of calling `actions/cache@v3` directly
       # or using `uses: actions/cache@v3`:
       - name: Cache data
         id: cache
-        uses: Olf0/cache-always@v3
+        uses: Olf0/always-cache@v3
         with:
           path: cached.txt
           key: constant-key
