@@ -1,5 +1,8 @@
 name: 'Always cache'
 description: 'Cache artifacts like dependencies and build outputs to improve workflow execution time'
+branding:
+  icon: 'archive'
+  color: 'gray-dark'
 
 inputs:
   path:
