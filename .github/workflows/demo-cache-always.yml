@@ -4,12 +4,12 @@ jobs:
   cache-demo:
     runs-on: ubuntu-latest
     steps:
-      # Use `uses: ./.github/actions/cache-always`,
+      # Use `uses: Olf0/cache-always@v3`,
       # instead of calling `actions/cache@v3` directly
       # or using `uses: actions/cache@v3`:
       - name: Cache data
         id: cache
-        uses: ./.github/actions/cache-always
+        uses: Olf0/cache-always@v3
         with:
           path: cached.txt
           key: constant-key
